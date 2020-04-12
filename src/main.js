@@ -14,6 +14,9 @@ import home from './views/home';
 import dataPage from './views/dataPage';
 import radioInput from './components/radioInput';
 import menuNav from './components/menuNav';
+import details from './components/details';
+import detailsFamilyUser from './components/detailsFamilyUser';
+
 
 
 
@@ -32,6 +35,7 @@ const router = new VueRouter({
       {
 
         path: '/',
+        name: 'home',
         component: home
       },
 
@@ -49,10 +53,27 @@ const router = new VueRouter({
                     path: 'income',
                     component: income
            //     },
-                  }
+                  },
+
+                  {
+                    path: 'activeUser',
+                    component: details
+
+
+                  },
+
+                  {
+                    path: 'activeFamily',
+                    component: detailsFamilyUser
+
+
+                  },
+
 
         ]
       },
+
+     
 
      
 
@@ -63,6 +84,13 @@ const router = new VueRouter({
 
 
     ],
+    beforeEach(to, from, next) {
+      /*
+      something...
+      */
+    
+      next() // DO IT!
+    },
 
     linkActiveClass: "btn btn-sm btn-block btn-secondary nav-link",
     linkExactActiveClass: "btn btn-sm btn-block  btn-secondary nav-link-active",
@@ -79,6 +107,10 @@ Vue.component('home-view', home);
 Vue.component('datapage', dataPage);
 Vue.component('radio-input', radioInput);
 Vue.component('menu-nav', menuNav);
+Vue.component('details', details);
+Vue.component('details-family', detailsFamilyUser);
+
+
 
 
 

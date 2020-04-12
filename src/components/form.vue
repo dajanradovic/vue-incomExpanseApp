@@ -54,17 +54,7 @@
   </div>
   </div>
   </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Name</label>
-    <input type="text" maxlength="20" v-model="object1.name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name"  />
-    <span class="text-danger" v-if="nameError">Please write your name</span>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Surname</label>
-    <input type="text" maxlength="20" v-model="object1.surname" class="form-control" id="exampleInputPassword1" placeholder="Surname"  />
-        <span class="text-danger" v-if="surnameError">Please write your surname</span>
-
-  </div>
+ 
     <div class="form-group">
     <label for="exampleFormControlTextarea1">Expanse description</label>
     <input type="text" maxlength="40" class="form-control" v-model="object1.description" id="exampleFormControlTextarea1" placeholder="Expanse description" />
@@ -90,15 +80,11 @@ export default {
     return {
    expansesList:[],
       object1:{
-      name:'',
-      surname: '',
-      expanse:'',
+       expanse:'',
       description:'',
       selectedMonthExpanse:'',
       selectedYearExpanse:''
        },
-    nameError: false,
-    surnameError: false,
     descriptionError: false,
     expanseError: false,
     selectedMonthExpanseError:'',
@@ -116,7 +102,7 @@ export default {
         //  alert('hello');
         // this.postDataCopy.name=this.object1.name;
          // this.postDataCopy.surname=this.object1.surname;
-         const copy = Object.assign({}, this.object1);
+         const copy = Object.assign({}, {...this.object1}, {id : Date.now().toString(36).substr(2, 5), animated:false, userId: this.activeUserId, userName: this.getPickedUser, family:this.currentlyPickedFamily});
          copy.animated=false;
          //this.postDataCopy.expanse=this.object1.expanse;
 
@@ -124,10 +110,12 @@ export default {
 
          //this.expansesList.push(copy);
          this.$store.commit('setExpansesList', copy);
-          this.object1.name='';
-         this.object1.surname='';
+       
            this.object1.expanse='';
            this.object1.description='';
+            this.selectedMonthExpanse='',
+            this.selectedYearExpanse=''
+
         }
 
 
@@ -137,15 +125,15 @@ export default {
 
   formValidation (){
     
-    this.object1.name =='' ? this.nameError = true : this.nameError = false;
+   
        
-    this.object1.surname ==''? this.surnameError = true : this.surnameError = false;
+  
    this.object1.description =='' ? this.descriptionError = true : this.descriptionError = false;
     this.object1.expanse =='' ?  this.expanseError = true : this.expanseError = false;
       this.object1.selectedMonthExpanse =='' ?  this.selectedMonthExpanseError = true : this.selectedMonthExpanseError = false;
      this.object1.selectedYearExpanse =='' ?  this.selectedYearExpanseError = true : this.selectedYearExpanseError = false;
 
-    if (this.object1.name == '' || this.object1.surname  == ''|| this.object1.description == '' || this.object1.expanse == '' || this.object1.selectedMonthExpanse =='' || this.object1.selectedYearExpanse ==''){
+    if (this.object1.description == '' || this.object1.expanse == '' || this.object1.selectedMonthExpanse =='' || this.object1.selectedYearExpanse ==''){
       console.log ('bla bla bla');
       return false;
     }
@@ -164,12 +152,39 @@ export default {
     }*/
   }
   },
+
   computed: {
       setExpansesList(){
         // return  this.object1.expansesList=this.object1.name;
       },
 
-  },
+  
+
+    activeUserId(){
+
+           return this.$store.getters.getActiveUser[0].id;
+
+      },
+
+      activeUserName(){
+
+           return this.$store.getters.getActiveUser[0].name;
+
+      },
+
+      currentlyPickedFamily(){
+
+      return this.$store.getters.getCurrentlyPickedFamily;
+    },
+
+    getPickedUser(){
+
+      return this.$store.getters.pickedUser;
+    }
+
+
+  
+  }
 }
 </script>
 

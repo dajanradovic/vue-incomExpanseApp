@@ -24,9 +24,7 @@
 </div>
 
 
-</div>
 
-<div>
 </div> 
 </div>
 </template>
@@ -36,7 +34,7 @@ export default {
   
   data () {
     return {
-
+      selectedMont:'',
     
 
 
@@ -45,21 +43,31 @@ export default {
 
   computed:{
      incometotal(){
+         let a=0;
+        this.incomesList.forEach(function(item){
+            a= a + parseInt(item.income);
 
-         return this.$store.state.incometotal;
+        })
+
+        return a;
        },
        expansetotal(){
+          let a=0;
+        this.expansesList.forEach(function(item){
+            a= a + parseInt(item.expanse);
 
-         return this.$store.state.expansetotal;
+        })
+
+        return a;
        },
 
         expansesList(){
 
-      return this.$store.getters.expanses;
+            return this.$store.getters.expansesForActiveUser;
     },
     incomesList(){
 
-      return this.$store.getters.incomes;
+      return this.$store.getters.incomesForActiveUser;
     },
   },
 
@@ -87,7 +95,7 @@ export default {
 }
 
 i {
-  font-size: 50px;
+  font-size: 60px;
   margin: 0 auto;
   
   }

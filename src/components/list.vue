@@ -1,15 +1,15 @@
 <template>
-<div >
+<div v-if="getPickedUser !=undefined" >
 
   
 
-<table v-if="expansesAndIncomesList != ''" class="table">
+<table v-if="expansesAndIncomesListFromActiveUser != ''" class="table">
 
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Surname</th>
+      <th scope="col">Month</th>
+      <th scope="col">Year</th>
       <th scope="col">Description</th>
       <th scope="col">Incomes</th>
       <th scope="col">Expanses</th>
@@ -19,14 +19,14 @@
   <transition-group  tag="tbody"> 
   
 
-    <tr  v-for="item, index in expansesAndIncomesList" :key="index"  v-bind:class="[checkClass(item.expanse), item.animated ? 'animated bounceOutLeft' : '' ]" :id="index">
+      <tr v-for="item, index in expansesAndIncomesListFromActiveUser" :key="item.id"  v-bind:class="[checkClass(item.expanse), item.animated ? 'animated bounceOutLeft' : '' ]">
       
-      <td>{{index +1}}</th>
-      <td>{{item.name}}</td>
-      <td>{{item.surname}}</td>
+      <td>{{index +1}}</td>
+      <td>{{item.selectedMonthIncome ? item.selectedMonthIncome : item.selectedMonthExpanse}}</td>
+      <td>{{item.selectedYearIncome ? item.selectedYearIncome : item.selectedYearExpanse}}</td>
       <td>{{item.description}}</td>
       <td>{{item.income ? item.income + ' kn' : ''}}</td>
-      <td>{{item.expanse ? item.expanse + ' kn' : ''}} <i class="fa fa-trash pull-right my-trash" v-on:click.self="eraseExpanse(index);" title="Delete"></i></td>
+      <td>{{item.expanse ? item.expanse + ' kn' : ''}} <i class="fa fa-trash pull-right my-trash" v-on:click="eraseExpanse(item.id);" title="Delete"></i></td>
     
     </tr>
    
@@ -34,7 +34,7 @@
   
 </table>
 
-<transition ></transition>
+
 
 </div>
 </template>
@@ -46,7 +46,8 @@ export default {
   data () {
     return {
       show: true,
-      animated:'',
+      animated:false,
+      lista:[],
       
         
     
@@ -55,16 +56,19 @@ export default {
     },
     methods:{
       
-       eraseExpanse(index){
+       eraseExpanse(id){
               
-              this.$store.commit('animateItem',index);
-
+              this.$store.commit('animateItem',id);
               //event.target.classList.add('animated bounceOutLeft');
-
+             
+                let self=this;
               //this.animate(event);
-              setTimeout( () => {this.$store.commit('eraseExpanseFromList',index); 
-              this.animated='';},1000);
-              
+                setTimeout(function(){
+                     self.$store.commit('eraseExpanseFromList',id);
+                      
+                },800)
+                
+               
               
            
           
@@ -72,24 +76,27 @@ export default {
           
 
       },
+      
 
       checkClass(a){
         return a ? 'bg-warning' : 'bg-secondary';
     },
 
-    animate(){
-
-      //event.target.classList.add('animated bounceOutLeft');
-        //this.animated='animated bounceOutLeft';
-
-    }
-
-   
+       
 
 
     },
 
     computed:{
+
+      expansesAndIncomesListFromActiveUser(){
+                
+                
+           return this.$store.getters.expansesAndIncomesForActiveUser;
+                        
+          
+
+    },
 
     expansesList(){
 
@@ -99,7 +106,25 @@ export default {
     expansesAndIncomesList(){
 
       return this.$store.getters.expansesAndIncomes;
+    },
+
+     activeUser(){
+
+           return this.$store.getters.getActiveUser;
+
+      },
+      
+
+     currentlyPickedFamily(){
+
+      return this.$store.getters.getCurrentlyPickedFamily;
+    },
+
+    getPickedUser(){
+
+      return this.$store.getters.pickedUser;
     }
+
 
     
 

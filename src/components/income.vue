@@ -52,18 +52,7 @@
   </div>
   </div>
   </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Name</label>
-    <input type="text" maxlength="20" v-model="object1.name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name"  />
-    <span class="text-danger" v-if="nameError">Please write your name</span>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Surname</label>
-    <input type="text" maxlength="20" v-model="object1.surname" class="form-control" id="exampleInputPassword1" placeholder="Surname"  />
-        <span class="text-danger" v-if="surnameError">Please write your surname</span>
-
-  </div>
-    <div class="form-group">
+      <div class="form-group">
     <label for="exampleFormControlTextarea1">Income description</label>
     <input type="text" maxlength="40" class="form-control" v-model="object1.description" id="exampleFormControlTextarea1" placeholder="income description" />
         <span class="text-danger" v-if="descriptionError">Please write your description</span>
@@ -88,15 +77,12 @@ export default {
     return {
    incomesList:[],
       object1:{
-      name:'',
-      surname: '',
       income:'',
       description:'',
       selectedMonthIncome:'',
       selectedYearIncome:''
        },
-    nameError: false,
-    surnameError: false,
+   
     descriptionError: false,
     incomeError: false,
     selectedMonthIncomeError: false,
@@ -114,8 +100,7 @@ export default {
         //  alert('hello');
         // this.postDataCopy.name=this.object1.name;
          // this.postDataCopy.surname=this.object1.surname;
-         const copy = Object.assign({}, this.object1);
-          copy.animated=false;
+         const copy = Object.assign({...this.object1}, {id : Date.now().toString(36).substr(2, 5), animated:false, userId: this.activeUserId, userName: this.getPickedUser, family:this.currentlyPickedFamily});
 
          //this.postDataCopy.income=this.object1.income;
 
@@ -123,12 +108,11 @@ export default {
 
          //this.incomesList.push(copy);
          this.$store.commit('setIncomesList', copy);
-          this.object1.name='';
-         this.object1.surname='';
+        
            this.object1.income='';
            this.object1.description='';
-           this.object1.selectedMonthIncome='',
-           this.object1.selectedYearIncome=''
+           this.object1.selectedMonthIncome='';
+           this.object1.selectedYearIncome='';
         }
 
 
@@ -138,9 +122,9 @@ export default {
 
   formValidation (){
     
-    this.object1.name =='' ? this.nameError = true : this.nameError = false;
+    
        
-    this.object1.surname ==''? this.surnameError = true : this.surnameError = false;
+   
    this.object1.description =='' ? this.descriptionError = true : this.descriptionError = false;
     this.object1.income =='' ?  this.incomeError = true : this.incomeError = false;
      this.object1.selectedMonthIncome =='' ?  this.selectedMonthIncomeError = true : this.selectedMonthIncomeError = false;
@@ -148,7 +132,7 @@ export default {
 
 
 
-    if (this.object1.name == '' || this.object1.surname  == ''|| this.object1.description == '' || this.object1.income == '' || this.object1.selectedMonthIncome =='' || this.object1.selectedYearIncome ==''){
+    if (this.object1.description == '' || this.object1.income == '' || this.object1.selectedMonthIncome =='' || this.object1.selectedYearIncome ==''){
       
       return false;
     }
@@ -157,22 +141,39 @@ export default {
 
       return true;
     }
- /* else   if (this.object1.description ==''){
-      this.descriptionError = true;
-
-    }
-    else if (this.object1.income ==''){
-      this.incomeError = true;
-
-    }*/
+ 
+  
   }
+  
+
   },
-  computed: {
-      setincomesList(){
-        // return  this.object1.incomesList=this.object1.name;
+
+  computed:{
+
+    activeUserId(){
+
+           return this.$store.getters.getActiveUser[0].id;
+
       },
 
-  },
+      activeUserName(){
+
+           return this.$store.getters.getActiveUser[0].name;
+
+      },
+
+      currentlyPickedFamily(){
+
+      return this.$store.getters.getCurrentlyPickedFamily;
+    },
+
+    getPickedUser(){
+
+      return this.$store.getters.pickedUser;
+    }
+
+
+  }
 }
 </script>
 

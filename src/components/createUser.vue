@@ -64,8 +64,9 @@
     <input v-model="singleUserAge" type="radio" value="65+" class="custom-control-input" id="defaultInline4" name="age">
     <label class="custom-control-label" for="defaultInline4">65+</label>
     </div>
+    <span class="text-danger" v-if="singleUserAgeError">Please check if you have selected your age</span>
     </div>
-  <span class="text-danger" v-if="singleUserAgeError">Please check if you have selected your age</span>
+  
 
         <!-- Single user form ends here-->
 
@@ -98,6 +99,8 @@
       
            
     </select>
+        <span class="text-danger" v-if="familyMembersNumberError">Please select number of family members</span>
+
 </div>
 <!-- dynamic list starts -->
 <div v-for="item,index in checkFamilyNumber" :key="index" class="crta">
@@ -106,24 +109,24 @@
         <p style="font-size: 12px;">Select family member age-group:</p>
     
         <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" class="custom-control-input" v-on:click="familyMemberAge($event, item)" value="0-19" v-bind:id="'defaultInline10' + index" v-bind:name="'age' + index">
+    <input type="radio" class="custom-control-input" v-on:change="familyMemberAge($event, item)" value="0-19" v-bind:id="'defaultInline10' + index" v-bind:name="'age' + index">
     <label class="custom-control-label" v-bind:for="'defaultInline10' + index">0-19</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" class="custom-control-input" v-on:click="familyMemberAge($event, item)" value="19-35" v-bind:id="'defaultInline11' + index" v-bind:name="'age' + index">
+    <input type="radio" class="custom-control-input" v-on:change="familyMemberAge($event, item)" value="19-35" v-bind:id="'defaultInline11' + index" v-bind:name="'age' + index">
     <label class="custom-control-label" v-bind:for="'defaultInline11' + index">19-35</label>
     </div>
    <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" class="custom-control-input" v-on:click="familyMemberAge($event, item)" value="35-50" v-bind:id="'defaultInline12' + index" v-bind:name="'age' + index">
+    <input type="radio" class="custom-control-input" v-on:change="familyMemberAge($event, item)" value="35-50" v-bind:id="'defaultInline12' + index" v-bind:name="'age' + index">
     <label class="custom-control-label" v-bind:for="'defaultInline12' + index">35-50</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline mb-3">
-    <input type="radio" class="custom-control-input" v-on:click="familyMemberAge($event, item)" value="50-65" v-bind:id="'defaultInline13' + index" v-bind:name="'age' + index">
+    <input type="radio" class="custom-control-input" v-on:change="familyMemberAge($event, item)" value="50-65" v-bind:id="'defaultInline13' + index" v-bind:name="'age' + index">
     <label class="custom-control-label" v-bind:for="'defaultInline13' + index">50-65</label>
     </div>
     
     <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" class="custom-control-input" v-on:click="familyMemberAge($event, item)" value="65+" v-bind:id="'defaultInline14' + index" v-bind:name="'age' + index">
+    <input type="radio" class="custom-control-input" v-on:change="familyMemberAge($event, item)" value="65+" v-bind:id="'defaultInline14' + index" v-bind:name="'age' + index">
     <label class="custom-control-label" v-bind:for="'defaultInline14' + index">65+</label>
     </div>
         
@@ -143,6 +146,7 @@
     
     <!-- Sign in button -->
     <button class="btn btn-info btn-block mt-2" v-on:click.prevent="createUser">Create</button>
+    <p class="mt-3">Already a user? Click <span id="link" v-on:click="$router.push({ path: '/data' });">here</span> to go to next page</p>
 
 </form>
 
@@ -163,11 +167,13 @@ export default {
       singleUserSurname: '',
       singleUserAge:'',
       personNameError: false,
+      errorsArray:[],
     personAgeError: false,
     familySurnameError: false,
     singleUserNameError: false,
     singleUserSurnameError:false,
-    singleUserAgeError: false
+    singleUserAgeError: false,
+    familyMembersNumberError:false
     
 
 
@@ -175,6 +181,11 @@ export default {
     }
   },
   methods: {
+
+    incrementIdValues(number){
+          this.$store.commit('incrementIdValuesProperty', number);
+
+    },
      
   
  
@@ -183,33 +194,59 @@ export default {
 
     if (!this.singleUserForm){
     
-    for (let i=1; i<=this.familyMembersNumber; i++){
-              this.test['personName' + i] =='' ? this.personNameError = true : this.personNameError = false;
+   /* for (let i=1; i<=this.familyMembersNumber; i++){
+             // this.test['personName' + i] =='' ? this.personNameError = true : this.personNameError = false;
               this.test['personAge' + i] =='' ? this.personAgeError = true : this.personAgeError = false;
-              this.familySurname =='' ? this.familySurnameError = true : this.familySurnameError = false;
+            //  
 
+          
 
+    };*/
+    
+          this.errorsArray=[];
+        this.personNameError=false;
+        this.personAgeError=false;
+        this.familySurname =='' ? this.familySurnameError = true : this.familySurnameError = false;
+        this.familyMembersNumber=='' ? this.familyMembersNumberError = true : this.familyMembersNumberError = false;
 
-    };
-
-          for (let i=1; i<=this.familyMembersNumber; i++){
+       for (var i=1; i<=this.familyMembersNumber; i++){
                 console.log('debugging');
-                  if (this.test['personName' + i] =='' || this.test['personAge' + i] ==''){
-                    
-                    return false;
+
+               
+              
+              if (this.test['personName' + i] =='' ){
+                console.log("proba");
+                    this.personNameError = true;
+                    this.errorsArray.push(Date.now().toString(36).substr(2, 4));
                   }
 
-                  else if (this.familySurname == ''){
+               if(this.test['personAge' + i] ==''){
+                        this.personAgeError = true;
+                       this.errorsArray.push(Date.now().toString(36).substr(2, 4));
 
-                    return false;
+
+
                   }
 
-                  else {
+
+                   }
+        console.log(this.errorsArray.length);
+
+      if (this.familySurname == '' || this.familyMembersNumber=='' || this.errorsArray.length>0){
+                  console.log('majku staru');
+                      return false;
+                  }
+
+      
+
+                  
+            
+
+       else {
                       console.log('debugging2');
 
                     return true;
                   }
-            }
     }
 
     else{
@@ -271,20 +308,24 @@ export default {
       },
 
       createUser(){
-
+             this.bljak=this.idValues +1;
+             
+              this.incrementIdValues(this.bljak);
         if (this.formValidation()){ 
-
+ 
                       if(!this.singleUserForm){
 
                           console.log('debugging3');
-
-                     const copy = Object.assign({...this.test}, {familySurname: this.familySurname});
+                          
+                         console.log(this.bljak);
+                     const copy = Object.assign({...this.test}, {familySurname: this.familySurname, id:  this.bljak });
                       this.$store.commit('setNewUser', copy);
                       }
 
                       else{
+                                                 console.log(this.bljak);
 
-                        const copy = Object.assign({}, {name : this.singleUserName, surname: this.singleUserSurname, age: this.singleUserAge} );
+                        const copy = Object.assign({}, {name : this.singleUserName, surname: this.singleUserSurname, age: this.singleUserAge, id: this.bljak} );
                            this.$store.commit('setNewUser', copy);
                       }
             this.$router.push({ path: '/data' });
@@ -315,6 +356,11 @@ export default {
                return parseInt(this.familyMembersNumber);
            }
           
+      },
+
+      idValues(){
+
+        return this.$store.getters.idValues;
       }
 
       
@@ -327,6 +373,17 @@ export default {
 .crta{
 
   border-bottom: 1px solid black;
+}
+
+#link{
+
+color: blue;
+}
+
+#link:hover{
+
+  color: purple;
+  cursor: pointer;
 }
 
 </style>

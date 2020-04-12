@@ -6,7 +6,11 @@
 
   
 <menu-nav></menu-nav>
-</div>
+<!--<div v-if="!checkIfUserIsPicked" class="overlay">
+        <transition >
+            <h1 id="overlayP">Pick a user before you start working</h1>
+        </transition>
+</div>-->
     
 
   
@@ -20,7 +24,9 @@
 <div class="col-lg-6 mt-3">
 
 <nav-dajan></nav-dajan>
+
 <router-view></router-view>
+
 
 </div>
 <div class="col-lg-6">
@@ -36,6 +42,7 @@
 </div>
 </div>
 </div>
+</div>
 
 
 
@@ -47,16 +54,91 @@
 
 <script>
 export default {
-  name: '',
+  name: 'fdfg',
+  
   data () {
     return {
-   
+
+        animated: false
     
 
 
       
     }
-  }
+
+  
+  },
+  methods:{
+       none(){
+          this.animated=true;
+          setTimeout(function(){
+
+              
+          }, 1500);
+          this.animated=false;
+          this.apply();
+           
+
+     
+         
+                
+      },
+
+      apply(){
+        
+         this.animated=true;
+          setTimeout(function(){
+
+              
+          }, 1500);
+          this.animated=false;
+          this.none();
+
+          
+        
+        
+      }
+      
+    
+
+  },
+
+  computed:{
+        checkIfUserIsPicked(){
+
+        return this.$store.getters.pickedUser;
+        }
+
+
+  },
+  mounted(){
+    /*
+      setInterval(function(){
+
+           document.querySelector('#overlayP').classList='animated flash';
+                setTimeout(function(){
+
+                   document.querySelector('#overlayP').classList.remove('animated');
+                    document.querySelector('#overlayP').classList.remove('flash');
+                },200);
+         
+
+
+      }, 1500);
+   
+
+*/
+
+    
+    
+  
+
+    
+   
+
+  },
+
+
 }
   
 </script>
@@ -75,5 +157,31 @@ export default {
 #sirina{
 
   min-width: 1024px !important;
+}
+
+.overlay{
+
+  background-color:#212326;
+  z-index: 10;
+  position: absolute;
+  top:55px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+  opacity:0.9;
+  text-align: center;
+}
+
+#overlayP{
+  position: absolute;
+  z-index:11;
+  color: white;
+  margin: 0 auto;
+  left: 30%;
+  right: 30%;
+  top: 30%;
+  
+  
+  font-family: Courier New;
 }
 </style>
