@@ -66,10 +66,20 @@ export const store = new Vuex.Store({
 
            },
 
-           expansesForActiveUserByMonth: (state, month)=>{
+           expansesForActiveUserByMonth: (state) => (month)=>{
 
                 return state.expansesList.filter(function(item){
                         return item.userId == state.activeId && item.selectedMonthExpanse == month;
+                           
+                            
+                    });
+
+           },
+
+           incomesForActiveUserByMonth: (state) => (month)=>{
+
+                return state.incomesList.filter(function(item){
+                        return item.userId == state.activeId && item.selectedMonthIncome == month;
                            
                             
                     });
