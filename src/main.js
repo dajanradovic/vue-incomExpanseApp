@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Chartkick from 'vue-chartkick';
+import Chart from 'chart.js';
 import 'bootstrap'; import 'bootstrap/dist/css/bootstrap.min.css';
 import form from './components/form';
 import income from './components/income';
@@ -27,7 +29,7 @@ import familyResumee from './components/familyResumee';
 
 
 
-
+Vue.use(Chartkick.use(Chart));
 Vue.use(VueRouter);
 
 const router = new VueRouter({

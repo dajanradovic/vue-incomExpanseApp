@@ -70,6 +70,7 @@
 
 
 </div> 
+<pie-chart :data="chartData"></pie-chart>
 </div>
 </template>
 
@@ -80,6 +81,10 @@ export default {
     return {
       selectedMonth:'Show all months',
       selectedYear:'Show all years',
+      chartData:{
+         
+
+      }
     
 
 
@@ -88,23 +93,26 @@ export default {
 
   methods:{
 
-    filterByMonth(){
+    showDataOnChart(args){
         
-
+           // this.chartData = Object.assign({...this.chartData},{args[key]: args[value]}});
 
     }
   },
 
   computed:{
      incometotal(){
-
-                   
+                                
                 if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
 
                               if(this.$store.getters.getCurrentlyPickedFamily == ''){
                                           
                                                                     
                                   let a=0;
+                                  if (this.incomesList<1){
+
+                                    return 0;
+                                  }
                                     this.incomesList.forEach(function(item){
                                         a= a + parseInt(item.income);
 
@@ -115,6 +123,7 @@ export default {
                                                     }
                                 else{
 
+                                 
                                   
                                                       let a=0;
                                   this.incomesListForUserInFamily.forEach(function(item){
@@ -132,6 +141,11 @@ export default {
                                           
                                                                     
                                   let a=0;
+
+                                  if (this.incomesListByYear<1){
+
+                                    return 0;
+                                  }
                                     this.incomesLisByYear.forEach(function(item){
                                         a= a + parseInt(item.income);
 
@@ -159,6 +173,10 @@ export default {
                                           
                                                                     
                                   let a=0;
+                                  if (this.incomesListByMonth<1){
+
+                                    return 0;
+                                  }
                                     this.incomesListByMonth.forEach(function(item){
                                         a= a + parseInt(item.income);
 
@@ -187,6 +205,10 @@ export default {
                                           
                                                                     
                                   let a=0;
+                                  if (this.incomesListByYearAndMonth<1){
+
+                                    return false;
+                                  }
                                     this.incomesListByYearAndMonth.forEach(function(item){
                                         a= a + parseInt(item.income);
 
@@ -208,26 +230,31 @@ export default {
                                 }
                 }
 
-     
+              
        },
        expansetotal(){
+                                
 
                 if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
 
                               if(this.$store.getters.getCurrentlyPickedFamily == ''){
                                           
-                                                                    
+                                                                  
                                   let a=0;
+                                  if (this.expansesList<1){
+
+                                    return 0;
+                                  }
                                     this.expansesList.forEach(function(item){
                                         a= a + parseInt(item.expanse);
 
                                                           });
 
                                                     return a;
+                                               }
                                                     
-                                                    }
                                 else{
-
+                                            
                                   
                                                       let a=0;
                                   this.expansesListForUserInFamily.forEach(function(item){
@@ -236,6 +263,7 @@ export default {
                                                         });
 
                                     return a;
+                                            
                                 }
 
                 }
@@ -245,7 +273,11 @@ export default {
                                           
                                                                     
                                   let a=0;
-                                    this.expansesLisByYear.forEach(function(item){
+                                  if (this.expansesListByYear<1){
+
+                                    return 0;
+                                  }
+                                    this.expansesListByYear.forEach(function(item){
                                         a= a + parseInt(item.expanse);
 
                                                           });
@@ -272,6 +304,10 @@ export default {
                                           
                                                                     
                                   let a=0;
+                                    if (this.expansesListByMonth<1){
+
+                                    return 0;
+                                  }
                                     this.expansesListByMonth.forEach(function(item){
                                         a= a + parseInt(item.expanse);
 
@@ -300,6 +336,10 @@ export default {
                                           
                                                                     
                                   let a=0;
+                                    if (this.expansesListByYearAndMonth<1){
+
+                                    return 0;
+                                  }
                                     this.expansesListByYearAndMonth.forEach(function(item){
                                         a= a + parseInt(item.expanse);
 
@@ -321,18 +361,42 @@ export default {
                                 }
                 }
 
-                      
+                    
      },
 
     expansesList(){
+      this.chartData={};
+        this.$store.getters.expansesForActiveUser.forEach(item=>{
+               
+                   
+                    this.chartData[item.description] = item.expanse;
 
-        
+                       
+               
+
+        });
+                           
+                  
+                   //
+
+
+          
         return this.$store.getters.expansesForActiveUser;
 
                
     },
 
     expansesListByMonth(){
+            this.chartData={};
+           this.$store.getters.expansesForActiveUserByMonth(this.selectedMonth).forEach(item=>{
+               
+                   
+                    this.chartData[item.description] = item.expanse;
+
+                       
+               
+
+        });
 
         
         return this.$store.getters.expansesForActiveUserByMonth(this.selectedMonth);
@@ -341,6 +405,19 @@ export default {
     },
 
     expansesListByYear(){
+            this.chartData={};
+            console.log('dajan');
+            console.log(this.$store.getters.expansesForActiveUserByYear(this.selectedYear));
+           
+      this.$store.getters.expansesForActiveUserByYear(this.selectedYear).forEach(item=>{
+               
+                   
+                    this.chartData[item.description] = item.expanse;
+
+                       
+               
+
+        });
 
         
         return this.$store.getters.expansesForActiveUserByYear(this.selectedYear);
@@ -349,6 +426,17 @@ export default {
     },
 
     expansesListByYearAndMonth(){
+            this.chartData={};
+
+        this.$store.getters.expansesForActiveUserByYearAndMonth(this.selectedYear, this.selectedMonth).forEach(item=>{
+               
+                   
+                    this.chartData[item.description] = item.expanse;
+
+                       
+               
+
+        });
                   return this.$store.getters.expansesForActiveUserByYearAndMonth(this.selectedYear, this.selectedMonth);
 
 
