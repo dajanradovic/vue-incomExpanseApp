@@ -19,7 +19,7 @@
   <transition-group  tag="tbody"> 
   
 
-      <tr v-for="item, index in expansesAndIncomesListFromActiveUser" :key="item.id"  v-bind:class="[checkClass(item.expanse), item.animated ? 'animated bounceOutLeft' : '' ]">
+      <tr v-for="item, index in chooseExpanseIncomeList" :key="item.id"  v-bind:class="[checkClass(item.expanse), item.animated ? 'animated bounceOutLeft' : '' ]">
       
       <td>{{index +1}}</td>
       <td>{{item.selectedMonthIncome ? item.selectedMonthIncome : item.selectedMonthExpanse}}</td>
@@ -95,6 +95,26 @@ export default {
            return this.$store.getters.expansesAndIncomesForActiveUser;
                         
           
+
+    },
+
+    chooseExpanseIncomeList(){
+
+            if(this.$store.getters.getCurrentlyPickedFamily == ''){
+
+              return this.expansesAndIncomesListFromActiveUser;
+            }
+
+            else{
+
+              return this.expansesAndIncomesListFromActiveUserInFamily;
+            }
+      
+    },
+
+    expansesAndIncomesListFromActiveUserInFamily(){
+
+                 return this.$store.getters.expansesAndIncomesForActiveUserInFamily;
 
     },
 

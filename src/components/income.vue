@@ -10,7 +10,7 @@
             <option disabled value="" selected >Pick a month</option>
 
       <option value="January">January</option>
-      <option>Fabruary</option>
+      <option>February</option>
       <option>March</option>
       <option>April</option>
       <option>May</option>

@@ -7,7 +7,7 @@
         <h4  syle="color:black;"><small>family </small>{{currentlyPickedFamily}}</h4>
         <h5 syle="color:black;"   class="card-title pt-2">{{getPickedUser}}<span class="pull-right">age:{{getActiveUserAge}}</span></h5>
         <p class="card-text">To add your expanses or income, please click on the buttons above. To see all your entries so far, please click on the 'show all' button. To completely delete user click on 'delete'.</p>
-        <a href="#" class="btn btn-success">Show all</a>
+        <button  class="btn btn-success" v-on:click="$router.push({ path: '/familyResumee' });">Show all</button>
        <button  class="btn btn btn-danger pull-right" v-on:click="deleteUser(activeUser[0].id)">Delete</button>
 
       </div>
@@ -90,6 +90,7 @@ methods:{
                     }
 
           }
+          
 }
 }
 </script>

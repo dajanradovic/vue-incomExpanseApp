@@ -16,6 +16,8 @@ import radioInput from './components/radioInput';
 import menuNav from './components/menuNav';
 import details from './components/details';
 import detailsFamilyUser from './components/detailsFamilyUser';
+import familyResumee from './components/familyResumee';
+
 
 
 
@@ -38,6 +40,15 @@ const router = new VueRouter({
         name: 'home',
         component: home
       },
+
+      {
+
+        path: '/familyResumee',
+        component: familyResumee
+      },
+
+      
+
 
       {
 
@@ -67,7 +78,9 @@ const router = new VueRouter({
                     component: detailsFamilyUser
 
 
-                  },
+                  }
+
+                  
 
 
         ]
@@ -109,6 +122,8 @@ Vue.component('radio-input', radioInput);
 Vue.component('menu-nav', menuNav);
 Vue.component('details', details);
 Vue.component('details-family', detailsFamilyUser);
+Vue.component('family-resumee', familyResumee);
+
 
 
 

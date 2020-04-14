@@ -21,6 +21,13 @@ export default {
 
       
     }
+
+    
+
+  },
+
+  created(){
+        this.$store.state.menuShow=false;
   }
 }
   

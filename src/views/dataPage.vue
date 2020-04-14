@@ -5,12 +5,8 @@
 <div class="container-fluid"> 
 
   
-<menu-nav></menu-nav>
-<!--<div v-if="!checkIfUserIsPicked" class="overlay">
-        <transition >
-            <h1 id="overlayP">Pick a user before you start working</h1>
-        </transition>
-</div>-->
+
+
     
 
   
@@ -67,6 +63,11 @@ export default {
     }
 
   
+  },
+
+  created(){
+this.$store.state.menuShow=true;
+
   },
   methods:{
        none(){

@@ -6,7 +6,7 @@
         <option disabled value="" selected>Filter by month</option>
            
       <option>January</option>
-      <option>Fabruary</option>
+      <option>February</option>
       <option>March</option>
       <option>April</option>
       <option>May</option>
@@ -17,13 +17,13 @@
       <option>October</option>
       <option>November</option>
       <option>Decembery</option>
-      <option>Show all</option>
+      <option>Show all months</option>
 
       
     </select>
   </div>
   <div class="col-lg-6">
-     <select   class="form-control form-control-sm" id="exampleFormControlSelect1">
+     <select v-model="selectedYear"  class="form-control form-control-sm" id="exampleFormControlSelect1">
       <option disabled value="" selected >Filter by year</option>
 
       <option>2020</option>
@@ -37,7 +37,7 @@
       <option>2028</option>
       <option>2029</option>
       <option>2030</option>
-      <option>Show all</option>
+      <option>Show all years</option>
 
            
     </select>
@@ -78,8 +78,8 @@ export default {
   
   data () {
     return {
-      selectedMonth:'',
-      selectedYear:'',
+      selectedMonth:'Show all months',
+      selectedYear:'Show all years',
     
 
 
@@ -98,83 +98,230 @@ export default {
   computed:{
      incometotal(){
 
-                    if (this.selectedMonth==''){
-                      let a=0;
-                      this.incomesList.forEach(function(item){
-                          a= a + parseInt(item.income);
+                   
+                if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
 
-                      });
+                              if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.incomesList.forEach(function(item){
+                                        a= a + parseInt(item.income);
 
-                      return a;
-                    }
+                                                          });
 
-                    else if(this.selectedMonth=='Show all'){
+                                                    return a;
+                                                    
+                                                    }
+                                else{
 
-                        let a=0;
-                      this.incomesList.forEach(function(item){
-                          a= a + parseInt(item.income);
+                                  
+                                                      let a=0;
+                                  this.incomesListForUserInFamily.forEach(function(item){
+                                      a= a + parseInt(item.income);
 
-                      });
+                                                        });
 
-                      return a;
+                                    return a;
+                                }
 
+                }
 
-                    }
+                else if (this.selectedYear != 'Show all years' && this.selectedMonth=='Show all months'){
+                           if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.incomesLisByYear.forEach(function(item){
+                                        a= a + parseInt(item.income);
 
-                    else{
+                                                          });
 
-                        let a=0;
-                      this.incomesListByMonth.forEach(function(item){
-                          a= a + parseInt(item.income);
+                                                    return a;
+                                                    
+                                                    }
+                                else{
 
-                      });
+                                  
+                                                        let a=0;
+                                    this.incomesListForUserInFamilyByYear.forEach(function(item){
+                                        a= a + parseInt(item.income);
 
-                      return a;
+                                                          });
 
+                                    return a;
+                                }
+                  }
 
+                 else if(this.selectedYear == 'Show all years' && this.selectedMonth !='Show all months'){
+                    
+                     if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.incomesListByMonth.forEach(function(item){
+                                        a= a + parseInt(item.income);
 
-                    }
+                                                          });
+
+                                                    return a;
+                                                    
+                                                    }
+                                else{
+
+                                                      
+                                                            let a=0;
+                                        this.incomesListForUserInFamilyByMonth.forEach(function(item){
+                                            a= a + parseInt(item.income);
+
+                                          });
+
+                                    return a;
+                                }
+                    
+
+                }
+
+                 else if(this.selectedYear != 'Show all years' && this.selectedMonth !='Show all months'){
+                    if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.incomesListByYearAndMonth.forEach(function(item){
+                                        a= a + parseInt(item.income);
+
+                                                          });
+
+                                                    return a;
+                                                    
+                                                    }
+                                else{
+
+                                  
+                                                    let a=0;
+                                this.incomesListForUserInFamilyByYearAndMonth.forEach(function(item){
+                                    a= a + parseInt(item.income);
+
+                                                      });
+
+                                    return a;
+                                }
+                }
 
      
        },
        expansetotal(){
 
-                      if (this.selectedMonth==''){
-                    let a=0;
-                    this.expansesList.forEach(function(item){
-                        a= a + parseInt(item.expanse);
+                if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
+
+                              if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.expansesList.forEach(function(item){
+                                        a= a + parseInt(item.expanse);
+
+                                                          });
+
+                                                    return a;
+                                                    
+                                                    }
+                                else{
+
+                                  
+                                                      let a=0;
+                                  this.expansesListForUserInFamily.forEach(function(item){
+                                      a= a + parseInt(item.expanse);
+
+                                                        });
+
+                                    return a;
+                                }
+
+                }
+
+                else if (this.selectedYear != 'Show all years' && this.selectedMonth=='Show all months'){
+                           if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.expansesLisByYear.forEach(function(item){
+                                        a= a + parseInt(item.expanse);
+
+                                                          });
+
+                                                    return a;
+                                                    
+                                                    }
+                                else{
+
+                                  
+                                                        let a=0;
+                                    this.expansesListForUserInFamilyByYear.forEach(function(item){
+                                        a= a + parseInt(item.expanse);
+
+                                                          });
+
+                                    return a;
+                                }
+                  }
+
+                 else if(this.selectedYear == 'Show all years' && this.selectedMonth !='Show all months'){
+                    
+                     if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.expansesListByMonth.forEach(function(item){
+                                        a= a + parseInt(item.expanse);
+
+                                                          });
+
+                                                    return a;
+                                                    
+                                                    }
+                                else{
+
+                                                      
+                                                            let a=0;
+                                        this.expansesListForUserInFamilyByMonth.forEach(function(item){
+                                            a= a + parseInt(item.expanse);
 
                                           });
 
                                     return a;
-                                              }
+                                }
+                    
 
-                  else if(this.selectedMonth=='Show all'){
+                }
 
-                    let a=0;
-                    this.expansesList.forEach(function(item){
-                        a= a + parseInt(item.expanse);
+                 else if(this.selectedYear != 'Show all years' && this.selectedMonth !='Show all months'){
+                    if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                          
+                                                                    
+                                  let a=0;
+                                    this.expansesListByYearAndMonth.forEach(function(item){
+                                        a= a + parseInt(item.expanse);
 
-                    });
+                                                          });
 
-                    return a;
+                                                    return a;
+                                                    
+                                                    }
+                                else{
 
-                  }
-                  
-                  else{
+                                  
+                                                    let a=0;
+                                this.expansesListForUserInFamilyByYearAndMonth.forEach(function(item){
+                                    a= a + parseInt(item.expanse);
 
-                      let a=0;
-                    this.expansesListByMonth.forEach(function(item){
-                        a= a + parseInt(item.expanse);
+                                                      });
 
-                    });
+                                    return a;
+                                }
+                }
 
-                    return a;
-
-
-
-                  }
-
+                      
      },
 
     expansesList(){
@@ -193,23 +340,108 @@ export default {
                
     },
 
+    expansesListByYear(){
+
+        
+        return this.$store.getters.expansesForActiveUserByYear(this.selectedYear);
+
+               
+    },
+
+    expansesListByYearAndMonth(){
+                  return this.$store.getters.expansesForActiveUserByYearAndMonth(this.selectedYear, this.selectedMonth);
+
+
+    },
+
+    //
+    expansesListForUserInFamily(){
+
+        
+        return this.$store.getters.expansesForActiveUserInFamily;
+
+               
+    },
+
+    expansesListForUserInFamilyByMonth(){
+
+        
+        return this.$store.getters.expansesForActiveUserInFamilyByMonth(this.selectedMonth);
+
+               
+    },
+
+    expansesListForUserInFamilyByYear(){
+
+        
+        return this.$store.getters.expansesForActiveUserInFamilyByYear(this.selectedYear);
+
+               
+    },
+
+    expansesListForUserInFamilyByYearAndMonth(){
+                  return this.$store.getters.expansesForActiveUserInFamilyByYearAndMonth(this.selectedYear, this.selectedMonth);
+
+
+    },
+
+
+
     chooseExpanseList(){
 
-                if (this.selectedMonth==''){
+                if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
+                                if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                           return this.expansesList;
+                                                      }
+                                else{
 
-                  return this.expansesList;
+                                  return this.expansesListForUserInFamily;
+                                }
+                }
+                                               
+
+                else if (this.selectedYear != 'Show all years' && this.selectedMonth=='Show all months'){
+
+                                    if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                           return this.expansesListByYear;
+                                                             }
+                                      else{
+
+                                             return this.expansesListForUserInFamilyByYear;   
+                                            }
+
+                                  
+                                }
+                                     
+
+                 else if(this.selectedYear == 'Show all years' && this.selectedMonth !='Show all months'){
+                        console.log('proba1');
+                                      if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                        console.log('proba2');
+                                             return this.expansesListByMonth;
+                                                             }
+                                      else{
+
+                                             return this.expansesListForUserInFamilyByMonth;   
+                                            }
+
+                    
+
                 }
 
-                else if (this.selectedMonth=='Show all'){
+                else if(this.selectedYear != 'Show all years' && this.selectedMonth != 'Show all months'){
 
-                    return this.expansesList;
 
+                                       if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                              return this.expansesListByYearAndMonth;
+                                                             }
+                                      else{
+
+                                             return this.expansesListForUserInFamilyByYearAndMonth;   
+                                            }
                 }
                 
-                else{
-
-                  return this.expansesListByMonth;
-                }
+                
               },
 
 
@@ -227,23 +459,111 @@ export default {
                
     },
 
+    incomesListByYear(){
+
+        
+        return this.$store.getters.incomesForActiveUserByYear(this.selectedYear);
+
+               
+    },
+
+    incomesListByYearAndMonth(){
+                  return this.$store.getters.incomesForActiveUserByYearAndMonth(this.selectedYear, this.selectedMonth);
+
+
+    },
+
+    incomesListForUserInFamily(){
+
+        
+        return this.$store.getters.incomesForActiveUserInFamily;
+
+               
+    },
+
+    incomesListForUserInFamilyByMonth(){
+
+        
+        return this.$store.getters.incomesForActiveUserInFamilyByMonth(this.selectedMonth);
+
+               
+    },
+
+    incomesListForUserInFamilyByYear(){
+
+        
+        return this.$store.getters.incomesForActiveUserInFamilyByYear(this.selectedYear);
+
+               
+    },
+
+    incomesListForUserInFamilyByYearAndMonth(){
+                  return this.$store.getters.incomesForActiveUserInFamilyByYearAndMonth(this.selectedYear, this.selectedMonth);
+
+
+    },
+
     chooseIncomesList(){
 
-      if (this.selectedMonth==''){
+     if (this.selectedMonth=='Show all months' && this.selectedYear=='Show all years'){
+                                if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                           return this.incomesList;
+                                                      }
+                                else{
 
-        return this.incomesList;
-      }
+                                  return this.incomesListForUserInFamily;
+                                }
+                }
+                                               
 
-      else if(this.selectedMonth=="Show all"){
-           return this.incomesList;
+                else if (this.selectedYear != 'Show all years' && this.selectedMonth=='Show all months'){
 
-      }
-      
-      else{
+                                    if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                           return this.incomesListByYear;
+                                                             }
+                                      else{
 
-        return this.incomesListByMonth;
-      }
-    }
+                                             return this.incomesListForUserInFamilyByYear;   
+                                            }
+
+                                  
+                                }
+                                     
+
+                 else if(this.selectedYear == 'Show all years' && this.selectedMonth !='Show all months'){
+                        console.log('proba1');
+                                      if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                        console.log('proba2');
+                                             return this.incomesListByMonth;
+                                                             }
+                                      else{
+
+                                             return this.incomesListForUserInFamilyByMonth;   
+                                            }
+
+                    
+
+                }
+
+                else if(this.selectedYear != 'Show all years' && this.selectedMonth != 'Show all months'){
+
+
+                                       if(this.$store.getters.getCurrentlyPickedFamily == ''){
+                                              return this.incomesListByYearAndMonth;
+                                                             }
+                                      else{
+
+                                             return this.incomesListForUserInFamilyByYearAndMonth;   
+                                            }
+                }
+                
+                
+    },
+
+     currentlyPickedFamily(){
+
+      return this.$store.getters.getCurrentlyPickedFamily;
+    },
   }
 
 }

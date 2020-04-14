@@ -89,11 +89,11 @@ export default {
 
               if (this.currentlyPickedFamily==''){
 
-                             this.$router.push({path : './activeUser'} );
+                             this.$router.push({path : '../data/activeUser'} );
               }
 
               else{
-                            this.$router.push({path : './activeFamily'} );
+                            this.$router.push({path : '../data/activeFamily'} );
 
 
               }

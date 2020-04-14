@@ -15,7 +15,8 @@ export const store = new Vuex.Store({
                pickedUser:'',
                animatedSpan: false,
                idValues: 0,
-               activeId:''
+               activeId:'',
+               menuShow:false
 
 
 
@@ -27,10 +28,40 @@ export const store = new Vuex.Store({
                 return state.expansesList;
             },
 
+           
+
             getCurrentlyPickedFamily: state=>{
 
                return state.currentlyPickedFamily;
 
+            },
+
+            getCurrentlyPickedFamilyObject:state=>{
+                return state.usersList.filter(function(item){
+                        return item.id == state.activeId;
+                           
+                            
+                    });
+
+            },
+
+            getCurrentlyPickedFamilyNumber:state=>{
+               var object = state.usersList.filter(function(item){
+                        return item.id == state.activeId;
+                           
+                            
+                    });
+                var counter=0;
+                    for (var item in object[0]){
+                                counter=counter+1;
+
+                    };
+
+                    var number= (counter/2)-1;
+
+                    return number;
+
+                
             },
 
             pickedUser: state =>{
@@ -46,6 +77,8 @@ export const store = new Vuex.Store({
             activeId: state=>{
                 return state.activeId;
             },
+
+            
            expansesAndIncomesForActiveUser: state =>{
 
                 return state.expansesIncomesList.filter(function(item){
@@ -55,7 +88,7 @@ export const store = new Vuex.Store({
                     });
 
            },
-
+           //expanses for active user
            expansesForActiveUser: state=>{
 
                 return state.expansesList.filter(function(item){
@@ -76,6 +109,213 @@ export const store = new Vuex.Store({
 
            },
 
+           expansesForActiveUserByYear: (state) => (year)=>{
+
+                return state.expansesList.filter(function(item){
+                        return item.userId == state.activeId && item.selectedYearExpanse == year;
+                           
+                            
+                    });
+
+           },
+
+           expansesForActiveUserByYearAndMonth: (state) => (year, month)=>{
+
+                return state.expansesList.filter(function(item){
+                        return item.userId == state.activeId && item.selectedYearExpanse == year && item.selectedMonthExpanse == month;
+                           
+                            
+                    });
+
+           },
+           //expanses for activ user end here
+
+
+           //expanses for active user in family start here
+           expansesForActiveUserInFamily: state =>{
+                let currentObject=[];
+                state.expansesList.forEach(item =>{
+                        if(item.userId == state.activeId){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+           },
+
+           expansesForActiveUserInFamilyByMonth: state =>(month)=>{
+                let currentObject=[];
+                state.expansesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedMonthExpanse == month){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+
+           expansesForActiveUserInFamilyByYear: state =>(year)=>{
+                let currentObject=[];
+                state.expansesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedYearExpanse == year){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+
+           expansesForActiveUserInFamilyByYearAndMonth: state => (year, month)=>{
+                let currentObject=[];
+                state.expansesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedYearExpanse == year && item.selectedMonthExpanse == month){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+                      //expanses for active user in family end here
+
+
+
+         //incomes for active user in family start here
+         incomesForActiveUserInFamily: state =>{
+                let currentObject=[];
+                state.incomesList.forEach(item =>{
+                        if(item.userId == state.activeId){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+           },
+
+           incomesForActiveUserInFamilyByMonth: state =>(month)=>{
+                let currentObject=[];
+                state.incomesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedMonthIncome == month){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+
+           incomesForActiveUserInFamilyByYear: state =>(year)=>{
+                let currentObject=[];
+                state.incomesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedYearIncome == year){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+
+           incomesForActiveUserInFamilyByYearAndMonth: state => (year, month)=>{
+                let currentObject=[];
+                state.incomesList.forEach(item =>{
+                        if(item.userId == state.activeId && item.selectedYearIncome == year && item.selectedMonthIncome == month){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+
+           },
+
+        //incomes for active user in family end here
+
+
+
+
+           //incomes for active user start here
            incomesForActiveUserByMonth: (state) => (month)=>{
 
                 return state.incomesList.filter(function(item){
@@ -86,7 +326,25 @@ export const store = new Vuex.Store({
 
            },
 
+           incomesForActiveUserByYear: (state) => (year)=>{
 
+                return state.incomesList.filter(function(item){
+                        return item.userId == state.activeId && item.selectedYearIncome == year;
+                           
+                            
+                    });
+
+           },
+
+           incomesForActiveUserByYearAndMonth: (state) => (year, month)=>{
+
+                return state.incomesList.filter(function(item){
+                        return item.userId == state.activeId && item.selectedYearIncome == year && item.selectedMonthIncome == month;
+                           
+                            
+                    });
+
+           },
 
            incomesForActiveUser: state=>{
 
@@ -97,6 +355,33 @@ export const store = new Vuex.Store({
                     });
 
            },
+           //incomes for active user end here
+
+
+           expansesAndIncomesForActiveUserInFamily: state =>{
+                let currentObject=[];
+                state.expansesIncomesList.forEach(item =>{
+                        if(item.userId == state.activeId){
+                               
+
+                                if (Object.values(item).includes(state.pickedUser)){
+                                               
+                                        currentObject.push(item);
+                                }
+
+
+                        }
+                               
+                         
+                    });
+                        
+                    return currentObject;
+
+                   
+
+           },
+
+           
 
            totalExpansesForActiveUser: state=>{
                 

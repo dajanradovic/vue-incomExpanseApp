@@ -1,10 +1,14 @@
 <template>
 
+<div>
 
-<router-view></router-view>
+<menu-nav v-show="this.$store.state.menuShow"></menu-nav>
+<router-view>
+
+</router-view>
 
 
-
+</div>
 </template>
 
 <script>
