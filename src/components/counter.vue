@@ -2,7 +2,7 @@
 <div>
   <div class="row mt-3">
   <div class="col-lg-6">
-     <select v-model="selectedMonth"  class="form-control form-control-sm" id="exampleFormControlSelect1">
+     <select v-model="selectedMonth"  class="form-control form-control-sm">
         <option disabled value="" selected>Filter by month</option>
            
       <option>January</option>
@@ -23,7 +23,7 @@
     </select>
   </div>
   <div class="col-lg-6">
-     <select v-model="selectedYear"  class="form-control form-control-sm" id="exampleFormControlSelect1">
+     <select v-model="selectedYear"  class="form-control form-control-sm" >
       <option disabled value="" selected >Filter by year</option>
 
       <option>2020</option>
@@ -52,7 +52,7 @@
     <ul>
     <li class="card-text" v-for="item in chooseIncomesList" :key="item.id">{{item.description}}  <span class="pull-right"><b> {{item.income}}</b> kn</span></li>
   </ul>
-  <p class="total pull-right"><b>Total:    {{incometotal}}</b> kn</p>
+  <p id="incomeTotal" class="total pull-right"><b>Total:    {{incometotal}}</b> kn</p>
   </div>
 </div>
 
@@ -62,7 +62,7 @@
     <ul>
     <li class="card-text" v-for="item in chooseExpanseList">{{item.description}}  <span class="pull-right"><b> {{item.expanse}}</b> kn</span></li>
   </ul>
-    <p class="total pull-right"><b>Total:    {{expansetotal}}</b> kn</p>
+    <p id="expanseTotal" class="total pull-right"><b>Total:    {{expansetotal}}</b> kn</p>
 
   </div>
 </div>
@@ -71,10 +71,13 @@
 
 </div> 
 <div class="row">
-<div class="col-lg-6">
+<div class="col-lg-6 mt-3">
+<h6 v-if="Object.keys(chartDataIncome).length !== 0">Income chart</h6>
 <pie-chart :data="chartDataIncome"></pie-chart>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-6 mt-3">
+  <h6 v-if="Object.keys(chartData).length !== 0">Expanse chart</h6>
+
 <pie-chart :data="chartData"></pie-chart>
 </div>
 </div>
@@ -797,7 +800,10 @@ export default {
 
 <style scoped>
 
+ h6{
 
+    text-align:center;
+  }
 
 .flex-container {
   display: flex;
@@ -832,5 +838,30 @@ li {
 
 }
 
+@media only screen and (max-width:515px){
+
+  .total{
+
+    left:0px;
+  }
+
+  h6{
+
+    text-align:center;
+  }
+}
+
+@media only screen and (max-width:320px){
+
+  .total{
+
+    left:0px;
+  }
+
+  h6{
+
+    text-align:center;
+  }
+}
 
 </style>

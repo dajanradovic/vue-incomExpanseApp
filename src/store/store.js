@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
                animatedSpan: false,
                idValues: 0,
                activeId:'',
-               menuShow:false
+               menuShow:false,
+               finalFamily:''
 
 
 
@@ -43,6 +44,11 @@ export const store = new Vuex.Store({
                             
                     });
 
+            },
+            
+            getFinalFamily:state=>{
+
+                return state.finalFamily;
             },
 
             getCurrentlyPickedFamilyNumber:state=>{
@@ -490,12 +496,24 @@ export const store = new Vuex.Store({
 
                 erasePickedUser:function(state){
                                 state.pickedUser='';
+                                state.activeId='';
+                                console.log(state.activeId);
 
 
                 },
 
                 setPickedFamily: function(state,payload){
                         state.currentlyPickedFamily=payload;
+
+                },
+
+                definitelyPickedFamily:function(state){
+
+                        state.finalFamily=state.currentlyPickedFamily;
+                },
+
+                emptyFinalFamily:function(state){
+                        state.finalFamily='';
 
                 },
 

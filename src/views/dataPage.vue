@@ -22,6 +22,8 @@
 <nav-dajan></nav-dajan>
 
 <router-view></router-view>
+<lista class="mt-4" ></lista>
+
 
 
 </div>
@@ -31,11 +33,7 @@
 </div>
 
 
-<div class="row">
-<div class="col-lg-12">
-<lista ></lista>
-</div>
-</div>
+
 </div>
 </div>
 </div>

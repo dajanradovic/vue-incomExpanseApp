@@ -59,12 +59,36 @@ const router = new VueRouter({
         children:[{
 
           path: 'expanse',
-          component: form
+          component: form,
+          beforeEnter: ((to, from, next) =>{
+
+            if (store.getters.getActiveUser == ''){
+              alert('you have to pick a user first');
+               next(false);
+            }
+
+            else{
+
+              next();
+            }
+          })
                   },
                   {
 
                     path: 'income',
-                    component: income
+                    component: income,
+                    beforeEnter: ((to, from, next) =>{
+
+                      if (store.getters.getActiveUser == ''){
+                        alert('you have to pick a user first');
+                         next(false);
+                      }
+          
+                      else{
+          
+                        next();
+                      }
+                    })
            //     },
                   },
 

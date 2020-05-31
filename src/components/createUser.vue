@@ -370,6 +370,11 @@ export default {
 </script>
 
 <style scoped>
+
+form{
+  
+  margin:0 auto;
+}
 .crta{
 
   border-bottom: 1px solid black;
@@ -384,6 +389,27 @@ color: blue;
 
   color: purple;
   cursor: pointer;
+}
+
+@media only screen and (max-width:600px){
+form{
+
+  border: 0px !important;
+  font-size: 12px;
+}}
+
+@media only screen and (max-width:320px){
+form{
+
+  border: 0px !important;
+  font-size: 12px;
+}
+.custom-control-inline{
+margin-right:0px !important;
+}
+
+
+
 }
 
 </style>

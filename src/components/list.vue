@@ -1,9 +1,9 @@
 <template>
-<div v-if="getPickedUser !=undefined" >
+<div v-if="getPickedUser !=''" >
 
   
 
-<table v-if="expansesAndIncomesListFromActiveUser != ''" class="table">
+<table v-if="expansesAndIncomesListFromActiveUser != ''" class="table table-responsive">
 
   <thead class="thead-dark">
     <tr>

@@ -42,12 +42,12 @@
    
   </div>
 </div>
-   <button v-show="getPickedUser" class="btn btn-sm align-middle btn-success ml-3" v-on:click.prevent="goToUserHomePage()">User homepage</button>
+   <button v-show="getPickedUser" id="userHomePageButton" class="btn btn-sm align-middle btn-success ml-3" v-on:click.prevent="goToUserHomePage()">User homepage</button>
 
   </form>
 
-   <h6 v-show="getPickedUser" class="bg-warning">Currently picked user is: <span>{{pickedUser}}</span><span v-show="currentlyPickedFamily !=''"> from {{currentlyPickedFamily}} family</span> </h6>
-  
+   <h6 v-show="getPickedUser" class="bg-warning">Currently picked user is: <span>{{pickedUser}}</span><span v-show="getFinalFamily !=''"> from {{getFinalFamily}} family</span> </h6>
+
 </nav>
   
 
@@ -116,7 +116,7 @@ export default {
                       self.pickedUser=item1.name;
                       self.$store.commit('setPickedUser', self.pickedUser);
                       self.$store.commit('setActiveId', item1.id);
-
+                      self.$store.commit('emptyFinalFamily');
                       self.currentlyPickedFamily='';
 
                     }
@@ -131,6 +131,7 @@ export default {
                 this.pickedUser=this.familyMemberNames[index1];
                 this.$store.commit('setPickedUser',this.pickedUser);
                 this.$store.commit('setActiveId', this.activeFamilyId);
+                this.$store.commit('definitelyPickedFamily');
                 this.$router.push({ path: '../data/activeFamily' });
 
 
@@ -204,10 +205,15 @@ export default {
               else return true;
         },
 
-        currentlyPickedFamily(){
+      getCurrentlyPickedFamily(){
 
       return this.$store.getters.getCurrentlyPickedFamily;
     },
+
+    getFinalFamily(){
+
+      return this.$store.getters.getFinalFamily;
+    }
 
 
 
@@ -252,7 +258,26 @@ i{
 cursor:pointer;
 }
 
+@media only screen and (max-width:5920px){
 
 
+
+  h6{
+
+    margin-top:10px;
+    font-size:14px !important;
+  }
+}
+
+@media only screen and (max-width:395px){
+
+#userHomePageButton{
+
+    margin-left:0px !important;
+    margin-top:10px !important;
+  }
+
+  
+}
 
 </style>
